@@ -6,6 +6,7 @@ import {ethers} from 'ethers'
 import checkWallet from '../utils/checkWallet'
 import jsonwebtoken from 'jsonwebtoken';
 import { setCookies, getCookie, getCookies, checkCookies } from 'cookies-next';
+import Test from '../components/Test'
 
 
 export default function Home() {  
@@ -26,6 +27,7 @@ export default function Home() {
   return (
     <div>
       <button onClick={createwallet}>Create Wallet</button>
+      <Test />
       {JSON.stringify(wallet)}
       {JSON.stringify(mnemonic)}
       {JSON.stringify(privateKey)}
