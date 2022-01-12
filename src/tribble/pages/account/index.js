@@ -6,6 +6,8 @@ import { ethers } from 'ethers';
 
 const index = () => {
     const [ wallet, setWallet ] = useState();
+    const [ address, setAddress ] = useState();
+    const [ balance, setBalance ] = useState();
     useEffect(()=> {
         // Use cookies to check for a wallet,
         // If wallet is found then setWallet as JWT privateKey
@@ -24,7 +26,11 @@ const index = () => {
             const connection = new ethers.providers.JsonRpcProvider(url)
             const wallet = new ethers.Wallet("0xa20ebe7abaa90b8df996edd2ed3e3dddbc673546dc9d456708cde41afcce50f6")
             const signer = wallet.connect(connection);
-            console.log(connection);
+            const address = await signer.getAddress();
+            setAddress(address)
+            const balance = await signer.getBalance();
+            setBalance(balance)
+            console.log(address);
         }
         // console.log(checker)
         checker();
@@ -32,8 +38,9 @@ const index = () => {
     }, [])
     return (
         <div>
-            <h2>Welcome to your account. </h2>
+            <h3>Your Address is : {address}</h3>
             {JSON.stringify(wallet)}
+            <h3>Your Balance is : {JSON.stringify(balance)}</h3>
         </div>
     )
 }
