@@ -9,8 +9,6 @@ const index = () => {
     const [ address, setAddress ] = useState();
     const [ balance, setBalance ] = useState();
     useEffect(()=> {
-        // Use cookies to check for a wallet,
-        // If wallet is found then setWallet as JWT privateKey
         const checker = async () => {
             const pKey = await getCookie('pKey');
             if (!pKey) {
@@ -23,13 +21,14 @@ const index = () => {
         }
         const connectToEthers = async () => {
             const url = "https://eth-mainnet.alchemyapi.io/v2/aw_ATN5yoZ578XsQUVEhaevmchG9e_iT";
-            const connection = new ethers.providers.JsonRpcProvider(url)
+            const connection = new ethers.getDefaultProvider('ropsten');
             const wallet = new ethers.Wallet("0xa20ebe7abaa90b8df996edd2ed3e3dddbc673546dc9d456708cde41afcce50f6")
             const signer = wallet.connect(connection);
             const address = await signer.getAddress();
             setAddress(address)
             const balance = await signer.getBalance();
-            setBalance(balance)
+            const final_balance = await ethers.utils.formatEther(balance);
+            setBalance(final_balance)
             console.log(address);
         }
         // console.log(checker)
@@ -40,7 +39,7 @@ const index = () => {
         <div>
             <h3>Your Address is : {address}</h3>
             {JSON.stringify(wallet)}
-            <h3>Your Balance is : {JSON.stringify(balance)}</h3>
+            <h3>Your Balance is : {JSON.stringify(balance)} ETH</h3>
         </div>
     )
 }
