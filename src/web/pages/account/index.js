@@ -8,6 +8,7 @@ const index = () => {
     const [ wallet, setWallet ] = useState();
     const [ address, setAddress ] = useState();
     const [ balance, setBalance ] = useState();
+    const [ recipient, setRecipient ] = useState(); 
     useEffect(()=> {
         const checker = async () => {
             const pKey = await getCookie('pKey');
